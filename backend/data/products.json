@@ -1,0 +1,215 @@
+[
+  {
+    "name": "iPhone 16 Pro",
+    "price": 1250,
+    "description": "Apple iPhone 16 Pro with A18 Pro chip, 256GB storage, and advanced camera system.",
+    "ratings": 4.3,
+    "images": [
+      {
+        "image": "/images/products/1.jpg"
+      },
+      {
+        "image": "/images/products/2.png"
+      }
+    ],
+    "category": "Electronics",
+    "seller": "Apple Store",
+    "stock": 10,
+    "numOfReviews": 25,
+    "reviews": []
+  },
+  {
+    "name": "Samsung Galaxy S25",
+    "price": 526.30,
+    "description": "Samsung Galaxy S25 with Snapdragon processor and Dynamic AMOLED display.",
+    "ratings": 4,
+    "images": [
+     {
+        "image": "/images/products/3.jpg"
+      }
+    ],
+    "category": "Electronics",
+    "seller": "Samsung",
+    "stock": 5,
+    "numOfReviews": 18,
+    "reviews": []
+  },
+  {
+    "name": "Sony WH-1000XM5",
+    "price": 60.5,
+    "description": "Premium wireless noise-cancelling headphones with exceptional sound quality.",
+    "ratings": 3.5,
+    "images": [
+     {
+        "image": "/images/products/4.jpg"
+      }
+    ],
+    "category": "Electronics",
+    "seller": "Sony",
+    "stock": 0,
+    "numOfReviews": 40,
+    "reviews": []
+  },
+  
+  {
+    "name": "HP Pavilion 15 laptop",
+    "price": 1500,
+    "description": "15.6-inch Full HD laptop with Intel Core i7 processor and 16GB RAM.",
+    "ratings": 3,
+    "images": [
+     {
+        "image": "/images/products/5.jpg"
+      }
+    ],
+    "category": "Electronics",
+    "seller": "HP",
+    "stock": 4,
+    "numOfReviews": 12,
+    "reviews": []
+  },
+  {
+    "name": "Boat Airdopes 141",
+    "price": 50.15,
+    "description": "Wireless Bluetooth earbuds with up to 42 hours of playback.",
+    "ratings": 4.5,
+    "images": [
+      {
+        "image": "/images/products/6.jpg"
+      }
+    ],
+    "category": "Electronics",
+    "seller": "Boat",
+    "stock": 3,
+    "numOfReviews": 55,
+    "reviews": []
+  },
+  {
+    "name": "Puma Sports T-Shirt",
+    "price": 10,
+    "description": "Lightweight and breathable sports T-shirt for workouts.",
+    "ratings": 4.7,
+    "images": [
+      {
+        "image": "/images/products/7.jpg"
+      }
+    ],
+    "category": "Clothes",
+    "seller": "Puma",
+    "stock": 7,
+    "numOfReviews": 20,
+    "reviews": []
+  },
+  {
+    "name": "Casio Edifice Watch",
+    "price": 157.8,
+    "description": "Elegant stainless steel analog watch for men.",
+    "ratings": 5,
+    "images": [
+      {
+        "image": "/images/products/8.jpg"
+      }
+    ],
+    "category": "Accessories",
+    "seller": "Casio",
+    "stock": 2,
+    "numOfReviews": 15,
+    "reviews": []
+  },
+  
+  {
+    "name": "Dell Inspiron 15",
+    "price": 2250,
+    "description": "Powerful laptop with a 15.6-inch display, Intel Core i5 processor and 16GB RAM.",
+    "ratings": 4.2,
+    "images": [
+      {
+        "image": "/images/products/9.jpg"
+      }
+    ],
+    "category": "Laptops",
+    "seller": "Dell",
+    "stock": 5,
+    "numOfReviews": 35,
+    "reviews": []
+  },
+ {
+  "name": "Lenovo IdeaPad Slim 5",
+  "price": 3250,
+  "description": "Slim and powerful laptop with AMD Ryzen 7 processor, 16GB RAM and fast SSD storage.",
+  "ratings": 5,
+  "images": [
+    {
+      "image": "/images/products/10.jpg"
+    }
+  ],
+  "category": "Laptops",
+  "seller": "Lenovo",
+  "stock": 0,
+  "numOfReviews": 38,
+  "reviews": []
+},
+  {
+    "name": "Apple Watch Series 9",
+    "price": 230,
+    "description": "Smartwatch with fitness tracking, heart rate monitoring and a bright Retina display.",
+    "ratings": 4.5,
+    "images": [
+      {
+        "image": "/images/products/11.jpg"
+      }
+    ],
+    "category": "Accessories",
+    "seller": "Apple",
+    "stock": 1,
+    "numOfReviews": 45,
+    "reviews": []
+  },
+  {
+    "name": "Samsung Galaxy Watch 6",
+    "price": 125,
+    "description": "Modern smartwatch with health tracking, sleep monitoring and a stylish AMOLED display.",
+    "ratings": 3.3,
+    "images": [
+      {
+        "image": "/images/products/12.jpg"
+      }
+    ],
+    "category": "Accessories",
+    "seller": "Samsung",
+    "stock": 10,
+    "numOfReviews": 32,
+    "reviews": []
+  },
+  {
+    "name": "JBL Tune 770NC",
+    "price": 1500,
+    "description": "Wireless Bluetooth headphones with active noise cancellation and powerful bass.",
+    "ratings": 3.9,
+    "images": [
+      {
+        "image": "/images/products/13.jpg"
+      }
+    ],
+    "category": "Electronics",
+    "seller": "JBL",
+    "stock": 6,
+    "numOfReviews": 50,
+    "reviews": []
+  },
+  {
+    "name": "boAt Rockerz 450",
+    "price": 300,
+    "description": "Affordable wireless Bluetooth headphones with deep bass and long battery life.",
+    "ratings": 4.1,
+    "images": [
+      {
+        "image": "/images/products/14.jpg"
+      }
+    ],
+    "category": "Electronics",
+    "seller": "boAt",
+    "stock": 0,
+    "numOfReviews": 65,
+    "reviews": []
+  }
+]
