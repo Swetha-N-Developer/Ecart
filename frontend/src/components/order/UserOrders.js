@@ -159,13 +159,7 @@ export default function UserOrders() {
 
                         {/* Repeat table headings at bottom */}
 
-                        <tr className="fw-bold">
-                            <td>Order ID</td>
-                            <td>Number of Items</td>
-                            <td>Amount</td>
-                            <td>Status</td>
-                            <td>Actions</td>
-                        </tr>
+                       
 
                     </MDBTableBody>
 
