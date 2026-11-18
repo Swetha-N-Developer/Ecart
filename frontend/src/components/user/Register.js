@@ -16,7 +16,7 @@ export default function Register(){
     const [avatar,setAvatar] =useState("");
 
     //create state to prerview selected avatar
-    const [avatarPreview,setAvatarPreview] = useState("/images/default_avatar.png")
+    const [avatarPreview,setAvatarPreview] = useState("/images/default_avatar.jpg")
    
     //create dispatch hook to send data to register action
     const dispatch = useDispatch();
