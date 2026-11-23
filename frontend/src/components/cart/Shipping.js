@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { countries } from 'countries-list'//countries-list package for country list in input field
 import { saveShippingInfo } from '../../slices/cartSlice'
@@ -51,6 +51,25 @@ export default function Shipping(){
        navigate('/order/confirm')
        //load confirm page after saved shipping details
     }
+
+    // 1. Background image effect
+        useEffect(() => {
+    
+            document.body.style.backgroundImage = "url('/images/shoppingBg.png')";
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundPosition = "center";
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundAttachment = "fixed";
+    
+            return () => {
+                document.body.style.backgroundImage = "";
+                document.body.style.backgroundSize = "";
+                document.body.style.backgroundPosition = "";
+                document.body.style.backgroundRepeat = "";
+                document.body.style.backgroundAttachment = "";
+            };
+    
+        }, []);
 
 
     return(

@@ -24,11 +24,24 @@ export default function Header(){
   const navigate = useNavigate();
 
 
-    return(<nav className="navbar row">
+    return(
+    
+    <nav className="navbar row">
       <div className="col-12 col-md-3">
         <div className="navbar-brand">
           <img width="100px" src="/images/logo11.png" alt="EcartLogo"/>
+          
         </div>
+
+        <span className="ml-3">
+          <Link to="/register" className="btn" id="login_btn">
+                signup
+            </Link>
+            </span>
+      </div>
+
+      <div>
+      
       </div>
 
      <div className="col-12 col-md-6 mt-2 mt-md-0 d-flex justify-content-center">
@@ -100,7 +113,7 @@ export default function Header(){
         <Image
             width={40}
             height={40}
-            src={user.avatar ?? './images/profile2.jpg'}
+            src={user.avatar ?? '/images/default_avatar.jpg'}
             roundedCircle
         />
         <span className="profile-name">{user.name}</span>

@@ -54,6 +54,26 @@ export default function UserOrders() {
         startIndex + entries
     );
 
+
+    // 1. Background image effect
+        useEffect(() => {
+    
+            document.body.style.backgroundImage = "url('/images/ordersBG.png')";
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundPosition = "center";
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundAttachment = "fixed";
+    
+            return () => {
+                document.body.style.backgroundImage = "";
+                document.body.style.backgroundSize = "";
+                document.body.style.backgroundPosition = "";
+                document.body.style.backgroundRepeat = "";
+                document.body.style.backgroundAttachment = "";
+            };
+    
+        }, []);
+
     return (
         <>
             <MetaData title="My Orders" />
@@ -157,9 +177,7 @@ export default function UserOrders() {
                                 </tr>
                             )}
 
-                        {/* Repeat table headings at bottom */}
-
-                       
+                        
 
                     </MDBTableBody>
 
@@ -210,6 +228,7 @@ export default function UserOrders() {
                 </div>
 
             </div>
+           
         </>
     );
 }

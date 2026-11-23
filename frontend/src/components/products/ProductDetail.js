@@ -7,6 +7,7 @@ import Loader from "../layouts/Loader";
 import { Carousel } from "react-bootstrap";
 import MetaData from "../layouts/MetaData";
 import { addCartItems } from '../../actions/cartAction';
+import { toast } from "react-toastify";
 
 
 export default  function ProductDetail(){
@@ -16,6 +17,7 @@ export default  function ProductDetail(){
     const { product, loading} =useSelector((state)=>state.productState);
     //productSate is a key in devtool state based on this we get product and loading data
 
+    const { items } = useSelector(state=>state.cartState);
  
 
     //state for increas/decrease quantity
@@ -60,10 +62,38 @@ export default  function ProductDetail(){
         setQuantity(qty);
     }
 
+   const addToCartHandler = async () => {
+
+    // Check whether the product is already in the cart
+    const isAlreadyInCart = items.some(
+        item => item.product === product._id
+    );
+
+    if (isAlreadyInCart) {
+        toast.error('Already in cart!', {
+            position: 'top-right'
+        });
+        return;
+    }
+
+    try {
+        await dispatch(addCartItems(product._id, quantity));
+
+        toast.success('Added to Cart!', {
+            position: 'top-right'
+        });
+
+    } catch (error) {
+        toast.error('Failed to add product to cart!', {
+            position: 'top-right'
+        });
+    }
+};
 
     //useEfffect is hook to fetch data from db 
     useEffect(()=>{
         dispatch(getProduct(id))//call getproduct fn in productAction
+         
     },[dispatch,id])
 
 // console.log('product_id',product._id);
@@ -152,7 +182,7 @@ export default  function ProductDetail(){
                 </div>
                  <button type="button"
                          id="cart_btn" 
-                         onClick ={() => dispatch(addCartItems( product._id, quantity))}
+                        onClick={addToCartHandler}
                          //send product id and quantity to cartAction
 
                          

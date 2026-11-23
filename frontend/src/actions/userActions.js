@@ -49,7 +49,7 @@ export const login = (email,password) => async (dispatch) => {
     }
 }
 
-export const clearAuthError = dispatch => {
+export const clearAuthError =() => dispatch => {
     dispatch(clearError())
 }
 

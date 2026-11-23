@@ -2,10 +2,12 @@ import { Fragment } from "react/jsx-runtime";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom'
 import { increaseCartItemQty, decreaseCartItemQty, removeItemFromCart } from "../../slices/cartSlice";
+import { useEffect } from "react";
 
 
 export default function Cart(){
     const { items } = useSelector(state=>state.cartState);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -30,13 +32,39 @@ export default function Cart(){
             instead of goes to homepage redirect helps to specified page(shipping page) with value 
         */
     }
+
+    // 1. Background image effect
+        useEffect(() => {
     
+            document.body.style.backgroundImage = " linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)),url('/images/cart.png')";
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundPosition = "center";
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundAttachment = "fixed";
+    
+            return () => {
+                document.body.style.backgroundImage = "";
+                document.body.style.backgroundSize = "";
+                document.body.style.backgroundPosition = "";
+                document.body.style.backgroundRepeat = "";
+                document.body.style.backgroundAttachment = "";
+            };
+    
+        }, []);
+
 
     return(
          <Fragment>
             {/* ternary operator - lenght of cart =0 then it displays cart is empty or it displays cart items */}
             {items.length === 0 ?
-            <h2 className="mt-5"> <b> Your Cart is Empty</b> </h2>
+                    <div class="container">
+                        <div class="box">
+                            <img src="\images\empty.gif" alt="emptycart"/>
+                            <h2> <b> Your Cart is Empty</b> </h2>
+                        </div>
+                    </div>
+          
+           
             :
             <Fragment>
 
@@ -55,7 +83,7 @@ export default function Cart(){
                                         <img src={ item.image } alt={ item.name } height="90" width="115"/>
                                     </div>
 
-                                    <div className="col-5 col-lg-3">
+                                    <div className="col-5 col-lg-3 text-dark">
                                         <Link to={`/product/${item.product}`}>{ item.name }</Link>
                                         {/* route = /product/:id here in localStorage id is saved as product key */}
                                     </div>
@@ -99,7 +127,7 @@ export default function Cart(){
                                 acc - accumulator. its initial value is 1.it acts like a loop and gives result as summative value of array
                             */}
 
-                            <p>Est. total: <span className="order-summary-values">${items.reduce((acc,item)=>(acc + item.quantity * item.price),0)}</span></p>
+                            <p>Est. total: <span className="order-summary-values">${items.reduce((acc,item)=>(acc + item.quantity * item.price),0).toFixed(2)}</span></p>
                             {/*total = (price * quantity)of each item */}
                             <hr />
                             <button id="checkout_btn" 

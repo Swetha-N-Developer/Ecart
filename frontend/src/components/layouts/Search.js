@@ -24,6 +24,11 @@ const searchHandler =(e)=>{
   const clearKeyword = () =>{
       setKeyword("");
   }
+
+
+
+
+
     //when path changed it should be cleared
     useEffect(()=>{
       if(location.pathname ==='/')
@@ -32,6 +37,7 @@ const searchHandler =(e)=>{
       }
     },[location])
 
+      
     return(
         <form onSubmit={searchHandler}>
             {/* when submit is clicked it calls searchHandlerfunction*/}

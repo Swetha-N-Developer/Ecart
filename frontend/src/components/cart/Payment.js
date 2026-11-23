@@ -155,6 +155,27 @@ export default function Payment(){
 }
     }
 
+
+    // 1. Background image effect
+        useEffect(() => {
+    
+            document.body.style.backgroundImage = "url('/images/shoppingBg.png')";
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundPosition = "center";
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundAttachment = "fixed";
+    
+            return () => {
+                document.body.style.backgroundImage = "";
+                document.body.style.backgroundSize = "";
+                document.body.style.backgroundPosition = "";
+                document.body.style.backgroundRepeat = "";
+                document.body.style.backgroundAttachment = "";
+            };
+    
+        }, []);
+
+
      useEffect(() => {
         validateShipping(shippingInfo, navigate)//we shoulld fill shipping details then only can come to payment Page
         if(orderError)

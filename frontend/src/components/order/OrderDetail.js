@@ -14,6 +14,26 @@ export default function OrderDetail(){
     //get id from url.id name should be same as route id name
     const {id} = useParams();
 
+
+    // 1. Background image effect
+        useEffect(() => {
+    
+            document.body.style.backgroundImage = "url('/images/ordersBG.png')";
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundPosition = "center";
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundAttachment = "fixed";
+    
+            return () => {
+                document.body.style.backgroundImage = "";
+                document.body.style.backgroundSize = "";
+                document.body.style.backgroundPosition = "";
+                document.body.style.backgroundRepeat = "";
+                document.body.style.backgroundAttachment = "";
+            };
+    
+        }, []);
+
     useEffect(()=>{
         dispatch(orderDetailAction(id))
     },[dispatch,id])
@@ -74,8 +94,12 @@ export default function OrderDetail(){
                         ))}
                     </div>
                     <hr />
+                    <div>
+                    
+                    </div>
                 </div>
             </div>
+            
             </Fragment>
              }
         </Fragment>
