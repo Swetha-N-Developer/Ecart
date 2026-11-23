@@ -33,6 +33,27 @@ export default function Home(){
     setCurrentPage(pageNo)
   }*/
 
+
+ // 1. Background image effect
+    useEffect(() => {
+
+        document.body.style.backgroundImage = "url('/images/homeBG.png')";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundPosition = "center";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundAttachment = "fixed";
+
+        return () => {
+            document.body.style.backgroundImage = "";
+            document.body.style.backgroundSize = "";
+            document.body.style.backgroundPosition = "";
+            document.body.style.backgroundRepeat = "";
+            document.body.style.backgroundAttachment = "";
+        };
+
+    }, []);
+
+
   useEffect(()=>{
     if(error){
       return toast.error(error,{
@@ -56,14 +77,18 @@ console.log("resPerPage:", resPerPage);
 console.log("pageCount:", Math.ceil(productsCount / resPerPage));
 
   return(
+
+     <div class="home_page">
         <Fragment>
           {loading ? <Loader/> : 
           <Fragment>
           <MetaData title={'Buy  Best Products'}/>
           {/*call metadata for title data*/}
+
+         
         <h1 id="products_heading">Latest Products</h1>
 
-    <section id="products" className="container mt-5">
+   <section id="products" className="container mt-5">
       <div className="row">
         {/*here products is field in db*/}
         {products && products.map(product=>(
@@ -112,9 +137,12 @@ console.log("pageCount:", Math.ceil(productsCount / resPerPage));
 
 :null}
 
+
 </Fragment>
    }
    
         </Fragment>
+
+        </div>
     )
 }

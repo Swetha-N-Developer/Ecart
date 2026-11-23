@@ -12,11 +12,14 @@ export default function Register(){
         password: ""
     });
 
-    //crerate state to get selected  avatar
+    //create state to get selected  avatar
     const [avatar,setAvatar] =useState("");
 
     //create state to prerview selected avatar
-    const [avatarPreview,setAvatarPreview] = useState("/images/default_avatar.jpg")
+    const [avatarPreview,setAvatarPreview] = useState("/images/default_avatar.jpg");
+
+    //errors state for frontend validation
+    const[ errors, setErrors ] = useState({});
    
     //create dispatch hook to send data to register action
     const dispatch = useDispatch();
@@ -26,6 +29,7 @@ export default function Register(){
     //get loading variable from state in browser by object  deconstruction
     const { loading,error,isAuthenticated } = useSelector(state => state.authState)//authstate object contains loading value
 
+    /*
     //define onChange fn to get all input values
     const onChange = (e) =>{
         //define function to get a image and preview that same image we selected
@@ -50,14 +54,195 @@ export default function Register(){
                 readAsDataURL - convert the selected file into url with binary codes encrypted with bcrypt
                 e.target.files[0] - selected file will be one file so it should be in zeroth array value
                 */
-    
+    /*
             }
             else{
                 setUserData({...userData, [e.target.name]:e.target.value})
             }
     }
+*/
 
-    //after submission
+    //frontend validation for name,email and password
+    const validateField = (name, value) => {
+    let error = "";//user defined name not state
+
+    // Name validation
+    if (name === "name") {
+        if (value.trim() === "") {
+            error = "Name is required";
+        }
+        else if(value.trim().length < 3){
+            error =  "Name must contain atleast 3 characters"
+        }
+    }
+
+    // Email validation
+    if (name === "email") {
+        if (value.trim() === "") {
+            error = "Email is required";
+        }
+        else if (value.trim().length < 5) {
+            error = "Email must contain at least 5 characters";
+        }
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) {
+            error = "Please enter a valid email address";
+        }
+    }
+
+    // Password validation
+    if (name === "password") {
+        if (value === "") {
+            error = "Password is required";
+        }
+        else if (value.length !== 8) {
+            error = "Password should not exceed 8 characters";
+        }
+        else if (!/[A-Z]/.test(value)) {
+            error = "Password must contain at least one uppercase letter";
+        }
+        else if (!/[0-9]/.test(value)) {
+            error = "Password must contain at least one number";
+        }
+        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+            error = "Password must contain at least one special character";
+        }
+    }
+
+    return error;
+};
+
+//frontend validation for image(avatar)
+const validateAvatar = (file) => {//here avatar input type is file
+    let error = "";
+
+    if (file) {
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            error = "Only JPG, PNG and WEBP images are allowed";
+        }
+        else if (file.size > 2 * 1024 * 1024) {
+            error = "Image size must be less than 2 MB";
+        }
+    }
+
+    return error;
+};
+
+
+const onChange = (e) => {
+
+    // If the user selects an avatar
+    if (e.target.name === "avatar") {
+
+        const file = e.target.files[0];
+
+        // If the user didn't select a file
+        if (!file) {
+            return;
+        }
+
+        // Validate avatar
+        const avatarError = validateAvatar(file);
+
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            avatar: avatarError
+        }));
+
+        // If the avatar is invalid, stop here
+        if (avatarError) {
+            return;
+        }
+
+        // Store the selected avatar
+        setAvatar(file);
+
+        // Preview the selected avatar
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            setAvatarPreview(reader.result);
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    // If the user types in name, email or password
+    else {
+
+        const { name, value } = e.target;
+
+        // Update userData state
+        setUserData({
+            ...userData,
+            [name]: value
+        });
+
+        // Validate the field while typing
+        const error = validateField(name, value);
+
+        // Update errors state
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            [name]: error
+        }));
+    }
+};
+
+//after submission with front end validation
+const submitHandler = (e) => {
+    e.preventDefault();
+
+    // Validate all text fields
+    const nameError = validateField("name", userData.name);
+    const emailError = validateField("email", userData.email);
+    const passwordError = validateField("password", userData.password);
+
+    // Validate avatar
+    const avatarError = validateAvatar(avatar);
+
+    // Store all errors
+    const newErrors = {
+        name: nameError,
+        email: emailError,
+        password: passwordError,
+        avatar: avatarError
+    };
+
+    setErrors(newErrors);
+
+    // Check whether any error exists
+    if (Object.values(newErrors).some(error => error !== "")) {
+        return;
+    }
+    /*
+    Object.values(newErrors) gets all the error messages.
+    .some() checks whether at least one error exists.
+    error !== "" checks whether an error message is present.
+    */
+
+    // If there are no errors, submit the form
+    const formData = new FormData();
+
+    formData.append("name", userData.name);
+    formData.append("email", userData.email);
+    formData.append("password", userData.password);
+
+    // Avatar is optional
+    if (avatar) {
+        formData.append("avatar", avatar);
+    }
+
+    dispatch(register(formData));
+};
+
+/*
+//after submission
     const submitHandler = (e) =>{
         e.preventDefault();
 
@@ -73,6 +258,28 @@ export default function Register(){
     
         dispatch(register(formData))//register is a function in userActions.js
     }
+
+*/
+// 1. Background image effect
+    useEffect(() => {
+
+        document.body.style.backgroundImage = "url('/images/registerBG.png')";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundPosition = "center";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundAttachment = "fixed";
+
+        return () => {
+            document.body.style.backgroundImage = "";
+            document.body.style.backgroundSize = "";
+            document.body.style.backgroundPosition = "";
+            document.body.style.backgroundRepeat = "";
+            document.body.style.backgroundAttachment = "";
+        };
+
+    }, []);
+
+
 
     //show errors in toast
     useEffect(() => {
@@ -95,9 +302,9 @@ export default function Register(){
 
     
     return(
-               <div className="row wrapper">
+               <div className="row wrapper1">
                     <div className="col-10 col-lg-5">
-                    <form onSubmit ={submitHandler} className="shadow-lg" encType='multipart/form-data'>
+                    <form onSubmit ={submitHandler} className="shadow-lg" encType='multipart/form-data'noValidate>
                         <h1 className="mb-3">Register</h1>
 
                     <div className="form-group">
@@ -109,6 +316,10 @@ export default function Register(){
                             id="name_field" 
                             className="form-control" 
                             value={userData.name} />
+
+                            {errors.name && (
+                                <p className="error-message">* {errors.name}</p>
+                            )}
                     </div>
 
                         <div className="form-group">
@@ -121,6 +332,9 @@ export default function Register(){
                             className="form-control"
                             value={userData.email} 
                         />
+                        {errors.email && (
+                            <p className="error-message">* {errors.email}</p>
+                        )}
                         </div>
             
                         <div className="form-group">
@@ -133,6 +347,9 @@ export default function Register(){
                             className="form-control"
                             value={userData.password} 
                         />
+                        {errors.password && (
+                             <p className="error-message">* {errors.password}</p>
+                        )}
                         </div>
 
                         <div className='form-group'>
@@ -158,8 +375,13 @@ export default function Register(){
                                 <label className='custom-file-label' htmlFor='customFile'>
                                     Choose Avatar
                                 </label>
+                               
                             </div>
                         </div>
+                    
+                    {errors.avatar && (
+    <p className="error-message">* {errors.avatar}</p>
+)}
                     </div>
             
                         <button

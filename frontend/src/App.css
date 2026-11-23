@@ -8,6 +8,22 @@ body {
   overflow-x: hidden;
 }
 
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+}
+
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Scroll Bar */
 
 ::-webkit-scrollbar-track {
@@ -26,6 +42,7 @@ body {
   border-radius: 5px;
 }
 
+/*header*/
 nav {
   background-color: #232f3e;
   padding: 1rem 1rem;
@@ -222,13 +239,39 @@ footer {
 
 /* Cart */
 
+.empty-cart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.box img {
+    width: 500px;
+    height: auto;
+}
+
+.box h2 {
+    width: 100%;
+    font-size: 30px;
+    text-align: center;
+    white-space: nowrap;
+}
+
 .cart-item {
   margin: 1.8rem 0rem;
   padding: 0rem 0.7rem;
 }
 
 .cart-item a {
-  color: grey;
+  color: black;
 }
 
 #delete_cart_item {
@@ -240,7 +283,7 @@ footer {
 }
 
 #card_item_price {
-  color: #febd69;
+  color: #110aea;
   font-weight: bold;
   font-size: 1.4rem;
 }
@@ -293,6 +336,34 @@ footer {
 
 /* Login & Register */
 
+
+.wrapper1 {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-top: 5rem;
+  margin-right: 5px;
+
+  font-weight: 700;
+}
+
+.wrapper1 form {
+  padding: 2.5rem 3rem;
+}
+
+.wrapper1 form .btn {
+  background-color: #fa9c23;
+  border-color: #fa9c23;
+  color: white;
+  margin-top: 2.5rem;
+}
+
+.wrapper1 form a {
+  font-size: 0.9rem;
+  color: grey;
+}
+
+
 .wrapper {
   display: flex;
   justify-content: center;
@@ -316,6 +387,16 @@ footer {
 .wrapper form a {
   font-size: 0.9rem;
   color: grey;
+}
+
+/*login errors-frontend validation*/
+.error-message {
+    color: red;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    margin-top: 3px;
+    margin-bottom: 5px;
 }
 
 /* Avatar */
@@ -700,4 +781,17 @@ ul.CTAs a {
     color: red;
 }
 
+/*.home_page {
+    background-image: url("../public/images/home_bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+     min-height: 100vh;
+}*/
 
+/*footer*/
+footer {
+  background-color: #232f3e;
+  padding: 1rem 1rem;
+}

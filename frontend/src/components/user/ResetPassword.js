@@ -23,6 +23,25 @@ export default function ResetPassword(){
         dispatch(resetPassword(formData, token)); //send both form data and token to action
      }
 
+     // 1. Background image effect
+    useEffect(() => {
+
+        document.body.style.backgroundImage = "url('/images/loginBG.png')";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundPosition = "center";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundAttachment = "fixed";
+
+        return () => {
+            document.body.style.backgroundImage = "";
+            document.body.style.backgroundSize = "";
+            document.body.style.backgroundPosition = "";
+            document.body.style.backgroundRepeat = "";
+            document.body.style.backgroundAttachment = "";
+        };
+
+    }, []);
+
      //after change the password it should be redirected to home page
      useEffect(() => {
         if(isAuthenticated) 

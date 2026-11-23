@@ -1,123 +1,241 @@
-import './App.css';
-import Home from './components/Home';
-import {BrowserRouter as Router,Routes,Route } from 'react-router-dom';
-import {HelmetProvider} from 'react-helmet-async';
-import Footer from './components/layouts/Footer';
-import Header from './components/layouts/Header';
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import ProductDetail from './components/products/ProductDetail';
-import ProductSearch from './components/products/ProductSearch';
-import Login from './components/user/Login';
-import Register from './components/user/Register';
-import { useEffect, useState } from 'react';
-import store from './store';
-import { loadUser } from './actions/userActions';
-import Profile from './components/user/Profile';
-import ProtectedRoute from './components/route/ProtectedRoute';
-import UpdateProfile from './components/user/UpdateProfile';
-import UpdatePassword from './components/user/UpdatePassword';
-import ForgotPassword from './components/user/ForgotPassword';
-import ResetPassword from './components/user/ResetPassword';
-import Cart from './components/cart/Cart';
-import Shipping from './components/cart/Shipping';
-import Confirmorder from './components/cart/Confirmorder';
-import Payment from './components/cart/Payment';
-import axios from 'axios';
-import { Elements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
-import Ordersuccess from './components/cart/Ordersuccess';
-import UserOrders from './components/order/UserOrders';
-import OrderDetail from './components/order/OrderDetail';
+import {
+    loginFail, 
+    loginRequest, 
+    loginSuccess, 
+    clearError,
+    registerRequest,
+    registerSuccess,
+    registerFail,
+    loadUserRequest,
+    loadUserSuccess,
+    loadUserFail, 
+    logoutSuccess,
+    logoutFail,
+    updateProfileSuccess,
+    updateProfileFail,
+    updateProfileRequest,
+    updatePasswordRequest,
+    updatePasswordFail,
+    updatePasswordSuccess,
+    forgotPasswordRequest,
+    resetPasswordRequest,
+    resetPasswordSuccess,
+    resetPasswordFail,
+    forgotPasswordSuccess,
+    forgotPasswordFail
+}  from '../slices/authSlice';//import login request from slices
+import axios from 'axios';// to connect backend api we use this middleware
 
-function App() {
-
-  //we pass the key to where we need.for that  we create useState
-  const[stripeApiKey, setStripeApiKey] = useState("");
-
-  //to make userdatas from db available to whole website once we logged in
-  useEffect(()=>{
-    store.dispatch(loadUser);
-    
-    //payment stripe data
-    async function getStripeApiKey()
-    {
-      //url for publish key we get this key once app open
-      const { data } = await axios.get('/api/v1/stripeapi');
-
-      //update setStripeApiKey with data(publishkey)
-      setStripeApiKey(data.stripeApiKey);
-    }
-    getStripeApiKey();//we should call this fn to get publish key
-  },[])//[]-load one time
-
-  return (
-    <HelmetProvider>
-    <Router>
-    <div className="App">
-        <Header/>
-         <div className="container container-fluid">{/*to add white spaces at each end for correct alignment*/}
-          <ToastContainer theme='dark'/>
-          <Routes>
-            {/*Home route */}
-          <Route path='/' element={<Home/>}/>
-
-           {/*Product routes */}
-          <Route path='/product/:id' element={<ProductDetail/>}/>
-          <Route path ='/search/:keyword' element={<ProductSearch/>} />
-
-          {/*auth routes */}
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/register' element={<Register/>}/>
-          <Route path='/myprofile' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
-          <Route path='/myprofile/update' element={<ProtectedRoute><UpdateProfile/></ProtectedRoute>}/>
-          <Route path='/myprofile/update/password' element={<ProtectedRoute><UpdatePassword/></ProtectedRoute>}/>
-          <Route path='/password/forgot' element={<ForgotPassword/>}/>
-          <Route path='/password/reset/:token' element={<ResetPassword/>}/>
-
-          {/*cart routes*/}
-          <Route path='/cart' element={<Cart/>}/>
-          
-          <Route path='/shipping' element={<ProtectedRoute><Shipping/></ProtectedRoute>}/>
-          {/* if we directly give shipping url it should not open without login */}
-          
-          <Route path='/order/confirm' element={<ProtectedRoute><Confirmorder/></ProtectedRoute>}/>
-          {/*
-          reset route should be same as the email url link
-
-          here <ProtectedRoute> </ProtectedRoute> - Parent element
-          <Profile/> - children
-          */}
-
-          <Route path='/order/success' element={<ProtectedRoute><Ordersuccess/></ProtectedRoute>}/>
-
-            {/*userOrders route */}
-          <Route path='/orders' element={<ProtectedRoute><UserOrders/></ProtectedRoute>}/>
-          <Route path='/order/:id' element={<ProtectedRoute><OrderDetail/></ProtectedRoute>}/>
-
-            {/*payment route */}
-          {stripeApiKey && <Route path='/payment' element={<ProtectedRoute><Elements stripe={loadStripe(stripeApiKey)}><Payment/></Elements></ProtectedRoute>}/>}
-            {/*
-              install stripe for react and front end using command npm install @stripe/react-stripe-js @stripe/stripe-js
-              Elements - get elements used in stripe payment
-              loadingStripe - function of frontend stripe package used to pass keys to payment component
-              stripeApikey - state variable of usestate contains publish key
-               {stripeApiKey && - only key available we could pass the key
-              */}
-
-
+export const login = (email,password) => async (dispatch) => {
+    //pass two parameters email and password
+    //dispatch function send the action to the reducer to update the state
+    try{
+        //try -  perform login action before that we need to send a request so we use the next code
         
+        //here we call first action -loginRequest
+        dispatch(loginRequest())
 
+        //here we send data using post method with loginapi for authentication contains email and password
+        //get data field from result using object destructuring method
+        const { data } = await axios.post(`/api/v1/login`,{email,password});
 
-          </Routes>
-        </div>
-        <Footer/>
-   
-    </div>
-    </Router>
-     </HelmetProvider>
+        //call second action.then we send data as a payload to second action
+        dispatch(loginSuccess(data))
 
-  );
+    }
+    catch(error){
+        dispatch(loginFail(error.response.data.message))
+        //third action shows error message if authentication failed.here message is a field in error response of backend
+    }
 }
 
-export default App;
+export const clearAuthError =() => dispatch => {
+    dispatch(clearError())
+}
+
+export const register = (userData) => async (dispatch) => {
+    //pass userData
+    //dispatch function send the action to the reducer to update the state
+    try{
+        //try -  perform login action before that we need to send a request so we use the next code
+        
+        //here we call first action -loginRequest
+        dispatch(registerRequest())
+
+        //userData argument contains multiple data and its include images so  here we create config 
+        const config = {
+            headers: {
+                'Content-type' : 'multipart/form-data'
+            }
+        }
+
+        //here we send data using post method with loginapi for authentication contains email and password
+        //get data field from result using object destructuring method
+        const { data } = await axios.post('/api/v1/register', userData, config);
+
+        //call second action.then we send data as a payload to second action
+        dispatch(registerSuccess(data))
+
+    }
+    catch(error){
+        dispatch(registerFail(error.response.data.message))
+        //third action shows error message if authentication failed.here message is a field in error response of backend
+    }
+}
+
+//after sucessfull login get userdatas from db and keep loaded in website
+export const loadUser = async (dispatch) => {
+    //function to get userData from db
+    //dispatch function send the action to the reducer to update the state
+    try{
+        //try -  perform login action before that we need to send a request so we use the next code
+        
+        //here we call first action -loginRequest
+        dispatch(loadUserRequest())
+    
+        const { data } = await axios.get(`/api/v1/myprofile`);
+
+        //call second action.then we send data as a payload to second action
+        dispatch(loadUserSuccess(data))
+
+    }
+    catch(error){
+        dispatch(loadUserFail(error.response.data.message))
+        //third action shows error message if authentication failed.here message is a field in error response of backend
+    }
+}
+
+//for logout
+export const logout = async (dispatch) => {
+    
+    try{
+        //try -  perform logout action 
+         await axios.get(`/api/v1/logout`);
+
+        //call logoutSucess reducer
+        dispatch(logoutSuccess())
+
+    }
+    catch(error){
+        dispatch(logoutFail())
+        //third action shows error msg
+    }
+}
+
+
+//Edit Profile
+export const updateProfile = (userData) => async (dispatch) => {
+    //get userData that we updated
+    //dispatch function send the action to the reducer to update the state
+    try{
+        //try -  perform login action before that we need to send a request so we use the next code
+        
+        //here we call first action -loginRequest
+        dispatch(updateProfileRequest())
+
+        //userData argument contains multiple data and its include images so  here we create config 
+        const config = {
+            headers: {
+                'Content-type' : 'multipart/form-data'
+            }
+        }
+
+        //here we send data using post method with loginapi for authentication contains email and password
+        //get data field from result using object destructuring method
+        const { data } = await axios.put(`/api/v1/updateProfile`, userData, config);
+
+        //call second action.then we send data as a payload to second action
+        dispatch(updateProfileSuccess(data))
+
+    }
+    catch(error){
+        dispatch(updateProfileFail(error.response.data.message))
+        //third action shows error message if authentication failed.here message is a field in error response of backend
+    }
+
+}
+
+//update Password
+export const updatePassword = (formData) => async (dispatch) => {
+    //get userData that we updated
+    //dispatch function send the action to the reducer to update the state
+    try{
+        //try -  perform login action before that we need to send a request so we use the next code
+        
+        //here we call first action -loginRequest
+        dispatch(updatePasswordRequest())
+
+        //usually wwe use formdata here so it automatically displayed as multipart data so we have to change it to application form data
+         const config = {
+            headers: {
+                'Content-type' : 'application/json'//it doesnt include images
+            }
+        }
+
+        //change password using put method 
+        await axios.put(`/api/v1/changePassword`,formData,config);
+
+        dispatch(updatePasswordSuccess())
+
+    }
+    catch(error){
+        dispatch(updatePasswordFail(error.response.data.message))
+        //third action shows error message if authentication failed.here message is a field in error response of backend
+    }
+}
+
+
+//forgotPassword
+export const forgotPassword = (formData) => async (dispatch) => {
+    //get email
+    //dispatch function send the action to the reducer to update the state
+    try{
+         //here we call first action -forgetPassword Request
+        dispatch(forgotPasswordRequest())
+
+        //usually we use formdata here so it automatically displayed as multipart data so we have to change it to application form data
+         const config = {
+            headers: {
+                'Content-type' : 'application/json'//it doesnt include images
+            }
+        }
+
+        //change password using put method 
+        const { data } = await axios.post(`/api/v1/password/forgot`,formData,config);
+
+        dispatch(forgotPasswordSuccess(data))
+
+    }
+    catch(error){
+        dispatch(forgotPasswordFail(error.response.data.message))
+        //third action shows error message if authentication failed.here message is a field in error response of backend
+    }
+}
+
+
+//Reset Password
+export const resetPassword = (formData, token) => async (dispatch) => {
+    //get new password,confirm password and token 
+    //dispatch function send the action to the reducer to update the state
+    try{
+         //here we call first action -forgetPassword Request
+        dispatch(resetPasswordRequest())
+
+        //usually we use formdata here so it automatically displayed as multipart data so we have to change it to application form data
+         const config = {
+            headers: {
+                'Content-type' : 'application/json'//it doesnt include images
+            }
+        }
+
+        //change password using put method 
+        const { data } = await axios.post(`/api/v1/password/reset/${token}`,formData,config);
+
+        dispatch(resetPasswordSuccess(data))
+
+    }
+    catch(error){
+        dispatch(resetPasswordFail(error.response.data.message))
+        //third action shows error message if authentication failed.here message is a field in error response of backend
+    }
+}
