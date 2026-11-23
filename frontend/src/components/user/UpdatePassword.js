@@ -29,8 +29,10 @@ export default function UpdatePassword(){
     if (name === "newPassword") {
         if (value === "") {
             error = "Password is required";
+        }else if (value.length < 4) {
+            error = "Password must contain atleast 4 characters";
         }
-        else if (value.length !== 8) {
+        else if (value.length > 8) {
             error = "Password must not exceed 8 characters";
         }
         else if (!/[A-Z]/.test(value)) {
