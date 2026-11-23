@@ -19,7 +19,7 @@ const userSchema =new mongoose.Schema({//schema - class,userSchema-schema name
         type:String,
         required :[true,'please Enter password'],
         minlength :[4,'password atleast contain 4 characters'],
-        maxlength: [6,'password cannot exceed 8 characters'],
+        maxlength: [8,'password cannot exceed 8 characters'],
         select:false//this means the password is not available to anyone while fetching user data
     },
     avatar:{
