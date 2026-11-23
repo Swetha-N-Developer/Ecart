@@ -26,79 +26,36 @@ export default function Header(){
 
     return(
     
-    <nav className="navbar row">
-      <div className="col-12 col-md-3">
-        <div className="navbar-brand">
-          <img width="100px" src="/images/logo11.png" alt="EcartLogo"/>
-          
-        </div>
+    <nav className="navbar row align-items-center ecart-header">
 
-        <span className="ml-3">
+        {/* Logo + Signup */}
+      <div className="col-12 col-md-3 header-logo-signup">
+
+          <div className="navbar-brand mb-0">
+              <img width="100px" src="/images/logo11.png" alt="EcartLogo"/>
+          </div>
+
           <Link to="/register" className="btn" id="login_btn">
-                signup
-            </Link>
-            </span>
+              Signup
+          </Link>
+
       </div>
 
-      <div>
       
-      </div>
-
-     <div className="col-12 col-md-6 mt-2 mt-md-0 d-flex justify-content-center">
-
+      {/* Home + Search */}
+     <div className="col-12 col-md-6 header-search">
       <Link to ='/'>
-        <img width="40px" src="/images/home2.png" alt="EcartLogo"/>
-      
-      </Link>
+          <img width="40px" src="/images/home2.png" alt="EcartLogo"/>
+        
+        </Link>
 
-        <div className="ml-1 flex-grow-1">
-
-        <Search/>   
+        <div className="search-container">
+          <Search/>   
         </div>   
       </div>
- {/*}
-      <div className="col-12 col-md-3 mt-4 mt-md-0 d-flex text-center">
-
-
-      {/*ternary operator to show "logged in" if isAuthenticated :true else show log in button*/}
-       {/* { isAuthenticated ? 
-        (
-          <Dropdown  className = 'd-inline'>
-
-            <Dropdown.Toggle variant = 'default text-white pr-5' id='dropdown-basic'>
-              <figure className="avatar avatar-nav">
-                <Image width = "40px"  height="40px" src={user.avatar ?? './images/profile2.jpg'} roundedCircle/>
-                {/*user - already we extract user obj from authState in redux
-                   avatar - name in db. but avatar is optional
-                   x??Y - null coaelsing operator if x exists it print x else it prints Y
-               */}
-            {/*} <span>{user.name}</span>
-              </figure>
-            </Dropdown.Toggle>
-
-              
-          
-            <Dropdown.Menu>
-              <Dropdown.Item className = 'text-danger'>Logout</Dropdown.Item>
-            </Dropdown.Menu>
-            
-            </Dropdown>
-
-         
-        ) 
-        :
-        <Link to="/login" className="btn" id="login_btn">Login</Link>
-        }
-
-        <span id="cart" className="ml-3">Cart</span>
-        <span className="ml-1" id="cart_count">2</span>
-        
-        
-      </div>
-    */}  
-
+ 
       
-<div className="col-12 col-md-3 mt-4 mt-md-0" >
+<div className="col-12 col-md-3 header-right" >
 
     <div className="d-flex align-items-center justify-content-end flex-nowrap">
 

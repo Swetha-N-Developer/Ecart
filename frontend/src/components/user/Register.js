@@ -311,7 +311,7 @@ const submitHandler = (e) => {
                         <h1 className="mb-3">Register</h1>
 
                     <div className="form-group">
-                        <label htmlFor="email_field">Name</label>
+                        <label htmlFor="Name_field">Name</label>
                         <input 
                             name='name'
                             onChange = {onChange}
