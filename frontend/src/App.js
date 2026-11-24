@@ -35,10 +35,13 @@ function App() {
   //we pass the key to where we need.for that  we create useState
   const[stripeApiKey, setStripeApiKey] = useState("");
 
-  const { isAuthenticate } =useSelector(state=>state.authState);
+  const { isAuthenticated } =useSelector(state=>state.authState);
 
-    //payment stripe data
-   const getStripeApiKey = () =>  async() => {
+  console.log("Authenticated:", isAuthenticated);
+  console.log("Stripe API Key:", stripeApiKey);
+
+  //payment stripe data
+   const getStripeApiKey = async() => {
 
       //url for publish key we get this key once app open
       const { data } = await axios.get('/api/v1/stripeapi');
@@ -54,10 +57,10 @@ function App() {
 
 
   useEffect(()=>{
-    if(isAuthenticate){
+    if(isAuthenticated){
         getStripeApiKey();//we should call this fn to get publish key
       }
-  })
+  },[isAuthenticated])
     
   
 
