@@ -38,7 +38,7 @@ function App() {
   const { isAuthenticated } =useSelector(state=>state.authState);
 
   console.log("Authenticated:", isAuthenticated);
-  console.log("Stripe API Key:", stripeApiKey);
+  //console.log("Stripe API Key:", stripeApiKey);
 
   //payment stripe data
    const getStripeApiKey = async() => {
