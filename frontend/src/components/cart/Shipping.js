@@ -55,7 +55,7 @@ export default function Shipping(){
     // 1. Background image effect
         useEffect(() => {
     
-            document.body.style.backgroundImage = "url('/images/shoppingBg.png')";
+            document.body.style.backgroundImage = "url('/images/shoppingBG.png')";
             document.body.style.backgroundSize = "cover";
             document.body.style.backgroundPosition = "center";
             document.body.style.backgroundRepeat = "no-repeat";
